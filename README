@@ -1,0 +1,131 @@
+
+ImageZ is very much work-in-progress multi-layer bitmap image editor.
+
+'main claim to fame': It allows layers to be created in different
+formats - from 8-bit RGB to float RGBA, internally all blending
+operations operate using floating point.
+
+I'm also experimenting with some novel GUI ideas - hidden menus,
+internal dialog boxes, and attempting to reduce or eliminate
+'popup-pox'.
+
+It represents about 2 months of full-time effort, although many
+problems are not yet addressed or incomplete.
+
+Features
+--------
+
+These things are already implemented to some level of functionality,
+but also see Status and the TODO file.
+
+o compound selections
+-> rectangle or ellipse
+-> boolean operators and/or/not
+-> invert selection
+-> editing of last object added
+-> feathering
+-> anti-aliasing
+
+o cut/copy/paste of layer content
+-> uses system clipboard
+-> able to create a new image from the clipboard
+
+o affine operations on layers
+-> using a single tool for scale/rotate/shear
+
+o load of image formats supported by Java2D
+-> nice load dialog with preview and meta-data view
+
+o save of png, jpeg images.
+-> supports jpeg+alpha (non-standard use of 4-channel jpeg)
+-> supports png 16 or 8 bit
+-> nice save dialogues
+-> images automatically flattened, alpha optional
+-> able to save comments in both formats.
+-> unlimited number of images open at once.
+
+o editable brush types
+-> fill
+-> shape
+-> size
+
+o infinite undo/redo
+-> limited only by memory size
+-> uses compacted 'sparse layer' to store layer edits
+
+o zoom
+-> 15 preset sizes
+
+o image operations
+-> resize image
+
+o layer operations
+-> add/remove layer
+-> reorder layers
+-> resize layer
+-> explicit alpha channel in layer type
+-> per layer opacity and blending mode
+
+o multiple layer types, independent of image
+-> RGB, RGBA, Greyscale, Greyscale + alpha
+-> 8 bit unsigned
+-> 16 bit unsigned
+-> 32-bit float
+
+o 'amiga' menus
+-> menu is hidden until you press the menu button (right mouse button)
+
+o single-window-per-image interface
+-> state is per-image
+-> fixed-panel for most tools
+-> internal frames for some other tools, controlled by function keys
+
+o screenshot capability
+-> able to select individual window on linux
+
+o effects on layers
+-> gaussian blur
+-> brightness/contrast
+-> wiener deconvolution (uses fft - broken at the moment)
+
+o utilises multiple cores if available
+-> for effects
+-> for blending (i.e. every edit/update)
+-> significant performance benefits on modern hardware
+
+Status
+------
+
+Alpha, or pre-alpha.  Many features are missing or not working
+properly despite the lengthy list above.
+
+See the TODO file for a list of minimum features required before the
+application reaches beta level.  The main one is the lack of ability
+to save multi-layer images as layers!
+
+The blending engine is fairly solid, as is the undo system and
+selection mechanism.  I'm still working on the tool design.  I'm
+reasonably happy with some ui features such as the saving dialogues,
+hidden menus, and over-all single-window layout.  Others need work or
+making more consistent.
+
+Performance is reasonable - it uses all threads on the host system
+to perform blending, so it runs even better on multi-cpu boxes.
+
+License & Warrantee
+-------------------
+
+Copyright (c) 2011 Michael Zucchi
+
+ImageZ is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+ImageZ is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+See GNU-GPL3.txt for the full license terms.
+

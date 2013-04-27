@@ -1,0 +1,32 @@
+
+Minimum level of features required before I would consider this beta quality:
+
+- Save/load float or 32-bit images.
+- Fix all the blend modes - only normal is implemented.
+ (the alpha model changed, which broke the blend modes)
+- Fix super-affine tool - it's nearly there now.
+- More work on the draw tool.  e.g. opaciy and so on.
+- Change the way brushes are set.  Right now you basically edit the
+  brush on the fly, but this sucks.  Need a brush list separated from
+  a brush editor.  And separated from brush parameters like
+  colour/opacity/etc.
+- Fix paste, ability to paste into layer, move it around.
+- More layer ops, e.g. merge down
+- Fix affine layer editing - rotations might crop the image.
+- Weiner deconvolution is broken. (only seems to work for ^2 sized images?)
+- Effects GUI inconsistent
+- Other GUI inconsistencies in various dialog boxes.
+- Ability to resize the image independently of layer size(s)
+- Change layer type.
+- Change zoom without resetting view
+- Save jpeg comments
+- Remember comments/other meta-data set on file when loaded.
+
+Other todo:
+
+- Implement brush editor/brush selector.
+- Fix the colour selector.
+- (re)implement some basic effects.
+- half-float image types - although I can't see how these can be
+  implemented efficiently.
+- Store undo information to disk (persitently?)

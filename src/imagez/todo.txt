@@ -1,0 +1,19 @@
+
+Lots.
+
+GUI
+ Decide what to do about paint tools
+ Where to put colour selector?
+
+Paint tools
+ Brush editor and/or selector
+
+Type
+ RGBFloat
+
+ImageIO
+[done] Can I load images directly into targets?
+
+Compositor
+ Make sure it handles non premultiplied alpha storage for layer data.
+ Make sure all blend modes work
