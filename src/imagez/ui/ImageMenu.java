@@ -23,6 +23,7 @@ import imagez.image.ZLayerType;
 import imagez.tool.ZToolInfo;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 
@@ -32,92 +33,165 @@ import javax.swing.JSeparator;
  */
 public class ImageMenu {
 
-	static AMenuBar imageMenu;
+    static AMenuBar imageMenu;
 
-	private static AMenuBar getMenu() {
-		AMenuBar mb = new AMenuBar();
-		JMenu menu = new JMenu("File");
-		mb.add(menu);
-		menu.add(new JMenuItem(new NewAction()));
-		menu.add(new JMenuItem(new SnapWindowAction()));
-		menu.add(new JMenuItem(new SnapClipboardAction()));
-		menu.add(new JSeparator());
-		menu.add(new JMenuItem(new OpenAction()));
-		menu.add(new JMenuItem(new SaveAction()));
-		menu.add(new JSeparator());
-		menu.add(new JMenuItem(new CloseAction()));
-		menu.add(new JMenuItem(new QuitAction()));
+    public static AMenuBar getJMenu() {
+        AMenuBar mb = new AMenuBar();
+        JMenu menu = new JMenu("File");
+        mb.add(menu);
+        menu.add(new JMenuItem(new NewAction()));
+        menu.add(new JMenuItem(new SnapWindowAction()));
+        menu.add(new JMenuItem(new SnapClipboardAction()));
+        menu.add(new JSeparator());
+        menu.add(new JMenuItem(new OpenAction()));
+        menu.add(new JMenuItem(new SaveAction()));
+        menu.add(new JSeparator());
+        menu.add(new JMenuItem(new CloseAction()));
+        menu.add(new JMenuItem(new QuitAction()));
 
-		menu = new JMenu("Edit");
-		mb.add(menu);
-		menu.add(new JMenuItem(new UndoAction()));
-		menu.add(new JMenuItem(new RedoAction()));
-		menu.add(new JSeparator());
-		menu.add(new JMenuItem(new CopyAction()));
-		menu.add(new JMenuItem(new PasteAction()));
+        menu = new JMenu("Edit");
+        mb.add(menu);
+        menu.add(new JMenuItem(new UndoAction()));
+        menu.add(new JMenuItem(new RedoAction()));
+        menu.add(new JSeparator());
+        menu.add(new JMenuItem(new CopyAction()));
+        menu.add(new JMenuItem(new PasteAction()));
 
-		menu = new JMenu("Select");
-		mb.add(menu);
-		menu.add(new JMenuItem(new SelectAllAction()));
-		menu.add(new JMenuItem(new SelectNoneAction()));
-		menu.add(new JMenuItem(new SelectInvertAction()));
+        menu = new JMenu("Select");
+        mb.add(menu);
+        menu.add(new JMenuItem(new SelectAllAction()));
+        menu.add(new JMenuItem(new SelectNoneAction()));
+        menu.add(new JMenuItem(new SelectInvertAction()));
 
-		menu = new JMenu("View");
-		mb.add(menu);
-		JCheckBoxMenuItem cb = new JCheckBoxMenuItem();
-		cb.setSelected(true);
-		cb.setAction(new ShowToolbarAction(cb));
-		menu.add(cb);
-		menu.add(new JMenuItem(ShowLastPoxAction.getInstance()));
-		menu.add(new JMenuItem(ShowPaintPoxAction.getInstance()));
-		menu.add(new JMenuItem(ShowGrabPoxAction.getInstance()));
+        menu = new JMenu("View");
+        mb.add(menu);
+        JCheckBoxMenuItem cb = new JCheckBoxMenuItem();
+        cb.setSelected(true);
+        cb.setAction(new ShowToolbarAction(cb));
+        menu.add(cb);
+        menu.add(new JMenuItem(ShowLastPoxAction.getInstance()));
+        menu.add(new JMenuItem(ShowPaintPoxAction.getInstance()));
+        menu.add(new JMenuItem(ShowGrabPoxAction.getInstance()));
 
-		mb.add(menu = new JMenu("Image"));
-		menu.add(new JMenuItem(new ResizeImageAction()));
+        mb.add(menu = new JMenu("Image"));
+        menu.add(new JMenuItem(new ResizeImageAction()));
 
-		mb.add(menu = new JMenu("Layers"));
-		menu.add(new JMenuItem(new ResizeLayerAction()));
-		JMenu sub;
-		menu.add(sub = new JMenu("Layer Type"));
-		for (ZLayerType t : ZLayerType.values()) {
-			sub.add(t.toString());
-		}
+        mb.add(menu = new JMenu("Layers"));
+        menu.add(new JMenuItem(new ResizeLayerAction()));
+        JMenu sub;
+        menu.add(sub = new JMenu("Layer Type"));
+        for (ZLayerType t : ZLayerType.values()) {
+            sub.add(t.toString());
+        }
 
-		menu = new JMenu("Tools");
-		mb.add(menu);
-		addTools(menu, ZToolInfo.getToolInfo("paint"));
-		//addTools(menu, ToolModel.getTools("paint"));
-		menu.add(new JSeparator());
-		//addTools(menu, ToolModel.getTools("structured"));
-		menu.add(new JSeparator());
-		addTools(menu, ZToolInfo.getToolInfo("selection"));
-		//addTools(menu, ToolModel.getTools("selection"));
-		menu.add(new JSeparator());
-		addTools(menu, ZToolInfo.getToolInfo("editing"));
+        menu = new JMenu("Tools");
+        mb.add(menu);
+        addTools(menu, ZToolInfo.getToolInfo("paint"));
+        //addTools(menu, ToolModel.getTools("paint"));
+        menu.add(new JSeparator());
+        //addTools(menu, ToolModel.getTools("structured"));
+        menu.add(new JSeparator());
+        addTools(menu, ZToolInfo.getToolInfo("selection"));
+        //addTools(menu, ToolModel.getTools("selection"));
+        menu.add(new JSeparator());
+        addTools(menu, ZToolInfo.getToolInfo("editing"));
 
-		menu = new JMenu("Filters");
-		mb.add(menu);
-		menu.add(new JMenuItem(new BrightnessContrastAction()));
-		menu.add(new JMenuItem(new GaussianBlurAction()));
-		menu.add(new JMenuItem(new WienerDeconvolutionAction()));
-		menu.add(new JMenuItem(new UnsharpMaskAction()));
-		menu.add(new JMenuItem(new DCTDenoiseAction()));
-		menu.add(new JMenuItem(new QWTDenoiseAction()));
+        menu = new JMenu("Filters");
+        mb.add(menu);
+        menu.add(new JMenuItem(new BrightnessContrastAction()));
+        menu.add(new JMenuItem(new GaussianBlurAction()));
+        menu.add(new JMenuItem(new WienerDeconvolutionAction()));
+        menu.add(new JMenuItem(new UnsharpMaskAction()));
+        menu.add(new JMenuItem(new DCTDenoiseAction()));
+        menu.add(new JMenuItem(new QWTDenoiseAction()));
 
-		return mb;
-	}
+        return mb;
+    }
 
-	private static void addTools(JMenu menu, ZToolInfo[] tools) {
-		for (ZToolInfo t : tools) {
-			menu.add(new JMenuItem(new SelectToolAction(t.name, t.icon, t.accel)));
-		}
-	}
+    private static AMenuBar getMenu() {
+        AMenuBar mb = new AMenuBar();
+        JMenu menu = new JMenu("File");
+        mb.add(menu);
+        menu.add(new JMenuItem(new NewAction()));
+        menu.add(new JMenuItem(new SnapWindowAction()));
+        menu.add(new JMenuItem(new SnapClipboardAction()));
+        menu.add(new JSeparator());
+        menu.add(new JMenuItem(new OpenAction()));
+        menu.add(new JMenuItem(new SaveAction()));
+        menu.add(new JSeparator());
+        menu.add(new JMenuItem(new CloseAction()));
+        menu.add(new JMenuItem(new QuitAction()));
 
-	public static AMenuBar getImageMenu() {
-		if (imageMenu == null) {
-			imageMenu = getMenu();
-		}
+        menu = new JMenu("Edit");
+        mb.add(menu);
+        menu.add(new JMenuItem(new UndoAction()));
+        menu.add(new JMenuItem(new RedoAction()));
+        menu.add(new JSeparator());
+        menu.add(new JMenuItem(new CopyAction()));
+        menu.add(new JMenuItem(new PasteAction()));
 
-		return imageMenu;
-	}
+        menu = new JMenu("Select");
+        mb.add(menu);
+        menu.add(new JMenuItem(new SelectAllAction()));
+        menu.add(new JMenuItem(new SelectNoneAction()));
+        menu.add(new JMenuItem(new SelectInvertAction()));
+
+        menu = new JMenu("View");
+        mb.add(menu);
+        JCheckBoxMenuItem cb = new JCheckBoxMenuItem();
+        cb.setSelected(true);
+        cb.setAction(new ShowToolbarAction(cb));
+        menu.add(cb);
+        menu.add(new JMenuItem(ShowLastPoxAction.getInstance()));
+        menu.add(new JMenuItem(ShowPaintPoxAction.getInstance()));
+        menu.add(new JMenuItem(ShowGrabPoxAction.getInstance()));
+
+        mb.add(menu = new JMenu("Image"));
+        menu.add(new JMenuItem(new ResizeImageAction()));
+
+        mb.add(menu = new JMenu("Layers"));
+        menu.add(new JMenuItem(new ResizeLayerAction()));
+        JMenu sub;
+        menu.add(sub = new JMenu("Layer Type"));
+        for (ZLayerType t : ZLayerType.values()) {
+            sub.add(t.toString());
+        }
+
+        menu = new JMenu("Tools");
+        mb.add(menu);
+        addTools(menu, ZToolInfo.getToolInfo("paint"));
+        //addTools(menu, ToolModel.getTools("paint"));
+        menu.add(new JSeparator());
+        //addTools(menu, ToolModel.getTools("structured"));
+        menu.add(new JSeparator());
+        addTools(menu, ZToolInfo.getToolInfo("selection"));
+        //addTools(menu, ToolModel.getTools("selection"));
+        menu.add(new JSeparator());
+        addTools(menu, ZToolInfo.getToolInfo("editing"));
+
+        menu = new JMenu("Filters");
+        mb.add(menu);
+        menu.add(new JMenuItem(new BrightnessContrastAction()));
+        menu.add(new JMenuItem(new GaussianBlurAction()));
+        menu.add(new JMenuItem(new WienerDeconvolutionAction()));
+        menu.add(new JMenuItem(new UnsharpMaskAction()));
+        menu.add(new JMenuItem(new DCTDenoiseAction()));
+        menu.add(new JMenuItem(new QWTDenoiseAction()));
+
+        return mb;
+    }
+
+    private static void addTools(JMenu menu, ZToolInfo[] tools) {
+        for (ZToolInfo t : tools) {
+            menu.add(new JMenuItem(new SelectToolAction(t.name, t.icon, t.accel)));
+        }
+    }
+
+    public static AMenuBar getImageMenu() {
+        if (imageMenu == null) {
+            imageMenu = getMenu();
+        }
+
+        return imageMenu;
+    }
 }

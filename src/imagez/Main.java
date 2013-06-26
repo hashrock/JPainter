@@ -20,6 +20,7 @@ package imagez;
 
 import imagez.tool.ZToolInfo;
 import imagez.ui.ImageWindow;
+import imagez.util.EmptyImageCreator;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -88,82 +89,10 @@ public class Main {
 			} catch (Exception ex) {
 			}
 		}
-		ImageWindow win = new ImageWindow();
+                
+		ImageWindow win = new ImageWindow(EmptyImageCreator.getEmptyImage());
 
 		win.setVisible(true);
 		win.getImageView().setTool(ZToolInfo.createDefaultTool());
-		if (false) {
-			final BufferedImage bi = ImageIO.read(new File("/home/notzed/Pictures/lena_std.png"));
-			JFrame frame = new JFrame("Image resize");
-			JTabbedPane tab = new JTabbedPane();
-
-			ImageIcon icf = new ImageIcon(bi);
-			ImageIcon ich = new ImageIcon(bi);
-
-			FixedIcon lf = new FixedIcon(bi);
-			//JLabel lf = new JLabel(icf);
-			JComponent lh = new JComponent() {
-
-				@Override
-				protected void paintComponent(Graphics g) {
-					Graphics2D gg = (Graphics2D) g.create();
-
-					gg.scale(0.25, 0.25);
-					gg.drawImage(bi, 32, 32, null);
-					//this.getIcon().paintIcon(this, gg, 0, 0);
-
-					gg.dispose();
-					//super.paintComponent(g);
-				}
-			};
-
-			lh.setSize(32, 32);
-
-
-			tab.add("Full", lf);
-			tab.add("Small", lh);
-
-			frame.add(tab);
-			frame.pack();
-			frame.setVisible(true);
-		}
-
-
-		if (true) {
-			return;
-		}
-		JFrame frame = new JFrame("Window");
-		Foo f = new Foo();
-
-		frame.setPreferredSize(new Dimension(720, 580));
-		frame.add(f);
-		frame.pack();
-
-		frame.addKeyListener(new KeyAdapter() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-					System.exit(0);
-				}
-				super.keyPressed(e);
-			}
-		});
-
-		frame.setVisible(true);
-		try {
-			Thread.sleep(1000);
-
-		} catch (InterruptedException ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		f.repaint(0, 0, 10, 10);
-		try {
-			Thread.sleep(1000);
-
-		} catch (InterruptedException ex) {
-			Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-		}
-		f.repaint();
 	}
 }

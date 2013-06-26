@@ -371,7 +371,6 @@ public class ImageView extends JComponent implements ZImageListener, KeyListener
 		} else {
 			gg.setFont(new Font("Dialog", Font.BOLD, 12));
 			gg.drawString("No Image Loaded.", 64, 64);
-			gg.drawString("Access the menu using the right mouse button.", 64, 64 + 20);
 		}
 		gg.dispose();
 	}

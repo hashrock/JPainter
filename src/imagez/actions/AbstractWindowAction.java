@@ -18,14 +18,16 @@
  */
 package imagez.actions;
 
-import imagez.ui.AMenuBar;
 import imagez.ui.ImageView;
 import imagez.ui.ImageWindow;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 
 /**
@@ -44,11 +46,18 @@ abstract public class AbstractWindowAction extends AbstractAction {
 
 	static ImageWindow getWindow(ActionEvent e) {
 		ImageWindow win;
+                
 
 		if (e.getSource() instanceof ImageView) {
-			win = (ImageWindow) ((ImageView) e.getSource()).getTopLevelAncestor();
+                    win = (ImageWindow) ((ImageView) e.getSource()).getTopLevelAncestor();
 		} else if (e.getSource() instanceof JMenuItem) {
-			win = (ImageWindow) AMenuBar.getActiveOwner();
+                    //メニューの親を返却
+                    JMenuItem menuItem = (JMenuItem) e.getSource();
+                    JPopupMenu popupMenu = (JPopupMenu) menuItem.getParent();
+                    Component invoker = popupMenu.getInvoker(); //this is the JMenu
+                    JComponent invokerAsJComponent = (JComponent) invoker;
+                    Container topLevel = invokerAsJComponent.getTopLevelAncestor();
+                    win = (ImageWindow)topLevel;
 		} else
 			win = null;
 

@@ -20,6 +20,7 @@ package imagez.actions;
 
 import imagez.image.ZImage;
 import imagez.image.ZLayerRGBAStructured;
+import imagez.tool.ZToolInfo;
 import imagez.ui.NewImageWindow;
 import imagez.ui.ImageWindow;
 import java.awt.Rectangle;
@@ -39,29 +40,13 @@ public class NewAction extends AbstractWindowAction {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		ImageWindow win = getWindow(e);
+		ImageWindow win = new ImageWindow(null);
+		win.getImageView().setTool(ZToolInfo.createDefaultTool());
+                win.setVisible(true);
 
-		NewImageWindow nwin = new NewImageWindow(win);
+//		ImageWindow win = getWindow(e);
+//		NewImageWindow nwin = new NewImageWindow(win);
+//		nwin.setVisible(true);
 
-		nwin.setVisible(true);
-		/*
-
-		ZImage img = new ZImage(1024, 768);
-
-		if (false) {
-			ZLayerRGBAStructured test = new ZLayerRGBAStructured(img, new Rectangle(img.getDimension()));
-			test.addText(64, 64, "This is a test\nMulti-line text\nTwo blank lines:\n\nAnd another line\nAnd we're done.\n");
-			img.addLayer(test);
-		}
-
-		if (win != null && win.isEmpty()) {
-			win.setImage(img);
-		} else {
-			//img.createLayer().setTitle("Background");
-			win = new ImageWindow(img);
-			win.setVisible(true);
-		}
-		 *
-		 */
 	}
 }

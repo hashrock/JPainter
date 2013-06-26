@@ -42,11 +42,11 @@ import javax.swing.InputMap;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollBar;
-import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 import javax.swing.MenuElement;
 import javax.swing.SwingUtilities;
@@ -55,7 +55,7 @@ import javax.swing.SwingUtilities;
  * @author notzed
  */
 public class ImageWindow extends javax.swing.JFrame {
-
+    
 	JPanel mainPanel;
 	private imagez.ui.ImageView imageView;
 	private javax.swing.JScrollPane jScrollPane1;
@@ -65,7 +65,6 @@ public class ImageWindow extends javax.swing.JFrame {
 	ToolbarSection toolSection;
 	// temp hack to test idea
 	JButton paletteButton;
-
 	JScrollBar stackID;
 	ArrayList<ZImage> stack = new ArrayList<ZImage>();
 	
@@ -91,14 +90,10 @@ public class ImageWindow extends javax.swing.JFrame {
 
 	public ImageWindow(ZImage image) {
 		this();
-
 		setImage(image);
 	}
 
 	public ImageWindow() {
-		//setUndecorated(true);
-		//getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
-		//setDefaultLookAndFeelDecorated(false);
 		
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -125,50 +120,24 @@ public class ImageWindow extends javax.swing.JFrame {
 		
 		getContentPane().add(mainPanel);
 
-		/*
-		toolbar.add(new ToolbarLabel("Layers"));
-		layers = new LayerView();
-		toolbar.add(layers);
-		layers.setAlignmentX(0);
-		 *
-		 */
 		layers = new LayerView();
 
 		ToolbarSection sec;
 		
 		
 		sec = new ToolbarSection("Layers", layers);
-		//sec.content.setBackground(Color.CYAN);
 		toolbar.add(sec);
 
 		toolSection = new ToolbarSection("Tool", null);
 		toolbar.add(toolSection);
 
 		sec = new ToolbarSection("Brush", imageView.brushContext.getWidget(imageView));
-		//sec.content.setBackground(Color.green);
 		toolbar.add(sec);
 
 		toolbar.add(Box.createVerticalGlue());
 		toolbar.add(Box.createHorizontalStrut(150));
 
-		/*
-		JPanel testStuff = new JPanel();
-		paletteButton = new JButton("click me");
-		paletteButton.addMouseListener(new MouseAdapter() {
-		
-		@Override
-		public void mousePressed(MouseEvent e) {
-		if (e.getButton() == e.BUTTON1) {
-		popupPalette();
-		}
-		}
-		});
-		testStuff.add(paletteButton);
-		
-		sec = new ToolbarSection("Test", testStuff);
-		toolbar.add(sec);
-		 *
-		 */
+
 		ImageData imageData = new ImageData(imageView);
 		sec = new ToolbarSection("Info", imageData);
 		sec.content.setBackground(Color.WHITE);
@@ -179,21 +148,15 @@ public class ImageWindow extends javax.swing.JFrame {
 		InputMap imap = imageView.getInputMap(imageView.WHEN_IN_FOCUSED_WINDOW);
 		ActionMap amap = imageView.getActionMap();
 
-		/*
-		imap.put(KeyStroke.getKeyStroke(' '), "show-pox");
-		amap.put("show-pox", ShowLastPoxAction.getInstance());
-		imap.put(KeyStroke.getKeyStroke("F1"), "show-paint");
-		amap.put("show-paint", ShowPaintPoxAction.getInstance());
-		imap.put(KeyStroke.getKeyStroke("F2"), "show-selection");
-		amap.put("show-selection", ShowGrabPoxAction.getInstance());
-		 */
-
 		// this needs work, quite a lot
-		AMenuBar amenu = ImageMenu.getImageMenu();
-		AMenuBar.attachMenu(this, amenu);
-
+		//AMenuBar amenu = ImageMenu.getImageMenu();
+		//AMenuBar.attachMenu(this, amenu);
+                JMenuBar amenu = ImageMenu.getJMenu();
 		// hack to link up accelerators
+                setJMenuBar(amenu);
 		addAccelerators(amenu);
+                
+                
 
 		WindowToolAdapter ta = new WindowToolAdapter(this);
 
@@ -212,25 +175,6 @@ public class ImageWindow extends javax.swing.JFrame {
 				close();
 			}
 		});
-
-		/*
-		ToolModel.getInstance().addPropertyChangeListener(new PropertyChangeListener() {
-		
-		@Override
-		public void propertyChange(PropertyChangeEvent evt) {
-		String name = evt.getPropertyName();
-		
-		if (name.equals(ToolModel.PROP_TOOL)) {
-		System.out.println("tool changed");
-		ZTool tool = (ZTool) evt.getNewValue();
-		
-		toolSection.setContent((JComponent) tool.getWidget());
-		toolSection.tb.setText(tool.getName());
-		}
-		}
-		});
-		 * 
-		 */
 
 		imageView.addPropertyChangeListener(ImageView.PROP_TOOL, new PropertyChangeListener() {
 
@@ -306,9 +250,6 @@ public class ImageWindow extends javax.swing.JFrame {
 		jm.add(jc);
 		jm.show(this, pos.x, pos.y);
 
-
-		//final Popup p = PopupFactory.getSharedInstance().getPopup(this, jc, pos.x+paletteButton.getWidth()/2, pos.y);
-		//p.show();
 
 		jm.addMouseListener(new MouseAdapter() {
 
@@ -392,9 +333,6 @@ public class ImageWindow extends javax.swing.JFrame {
 		}
 		this.overlay = overlay;
 		if (overlay != null) {
-		//	Rectangle r = overlay.getBounds();
-		//	r.x = 200 + 8;
-		//	r.y = 8;
 			Point pos = overlay.getLocation();
 			Dimension d = overlay.getPreferredSize();
 			
@@ -404,8 +342,6 @@ public class ImageWindow extends javax.swing.JFrame {
 			pos.y = Math.max(0, pos.y);
 			System.out.println("set overlay pos " + pos);
 			overlay.setLocation(pos);
-	//		overlay.setLocation(toolbar.isVisible() ? 150+8 : 8, 8);
-		//	overlay.setBounds(r);
 			getLayeredPane().add(overlay, 1);
 		}
 		getLayeredPane().repaint();
